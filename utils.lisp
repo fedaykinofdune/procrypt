@@ -23,4 +23,3 @@
     (pbkdf2-hash-password (string-to-octets password))
     (list :hash (byte-array-to-hex-string hash)
           :salt (byte-array-to-hex-string salt))))
-

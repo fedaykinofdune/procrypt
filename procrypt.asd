@@ -10,4 +10,8 @@
   :components ((:file "packages")
                (:file "utils")
                (:file "database")
+               (:file "database-users")
+               (:file "database-coins")
+               (:file "database-balances")
+               (:file "database-orders")
                (:file "main")))
