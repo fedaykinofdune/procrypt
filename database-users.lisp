@@ -23,9 +23,9 @@
   (with-connection *db*
     (query (:select 'email :from 'users) :column)))
 
-(defun find-user-by-email (email)
+(defun find-user-by-email (user-email)
   (with-connection *db*
-    (query (:select '* :from 'users :where (:= 'email email)) :plist)))
+    (query (:select '* :from 'users :where (:= 'email user-email)) :plist)))
 
 (defun insert-user (user-name email password)
   (with-connection *db*

@@ -26,3 +26,31 @@
         (make-instance 'balances
                        :user user-email
                        :coin coin-code)))))
+
+(defun find-user-balance (user-email coin-code)
+  (with-connection *db*
+    (query
+      (:select 'quantity
+       :from 'balances
+       :where (:and
+                (:= 'user user-email)
+                (:= 'coin coin-code))) :single)))
+
+(defun list-all-user-balances (user-email)
+  (with-connection *db*
+    (query
+      (:order-by
+        (:select 'coin 'quantity
+         :from 'balances
+         :where (:= 'user user-email))
+        'coin))))
+
+(defun list-positive-user-balances (user-email)
+  (with-connection *db*
+    (query
+      (:order-by
+        (:select 'coin 'quantity
+         :from 'balances
+         :where (:and
+                  (:= 'user user-email)
+                  (:> 'quantity 0))) 'coin))))
