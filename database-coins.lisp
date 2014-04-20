@@ -7,6 +7,10 @@
    (name :accessor name
          :initarg :name
          :col-type text)
+   (trade-fee :accessor trade-fee
+              :initarg :trade-fee
+              :col-type real
+              :col-default 0.2)
    (address :accessor address
             :initarg :address
             :col-type text)
@@ -23,13 +27,14 @@
   (with-connection *db*
     (query (:select '* :from 'coins :where (:= 'code code)) :plist)))
 
-(defun insert-coin (code name address port)
+(defun insert-coin (code name address port trade-fee)
   (with-connection *db*
     (unless (find-coin-by-code code)
       (insert-dao
         (make-instance 'coins
                        :code code
                        :name name
+                       :trade-fee trade-fee
                        :address address
                        :port port)))))
 
@@ -45,6 +50,6 @@
   (with-connection *db*
     (query (:select 'code :from 'coins) :column)))
 
-(defun add-new-coin (&key code name address port)
-  (insert-coin code name address port)
+(defun add-new-coin (&key code name address port (trade-fee 0.2))
+  (insert-coin code name address port trade-fee)
   (insert-coin-balances code))
