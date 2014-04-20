@@ -10,7 +10,7 @@
              :col-type bigint)
    (user :accessor user
          :initarg :user
-         :col-type integer)
+         :col-type text)
    (action :accessor action
            :initarg :action
            :col-type text)
@@ -28,13 +28,13 @@
 
 (deftable orders
   (!dao-def)
-  (!foreign 'users 'user 'id)) 
+  (!foreign 'users 'user 'email)) 
 
-(defun insert-order (&key user-id action trade-pair price quantity)
+(defun insert-order (&key user-email action trade-pair price quantity)
   (with-connection *db*
     (insert-dao
       (make-instance 'orders
-                     :user user-id
+                     :user user-email
                      :action action
                      :trade-pair trade-pair
                      :price price
