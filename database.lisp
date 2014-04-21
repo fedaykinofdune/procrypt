@@ -6,7 +6,8 @@
   '(users
     coins
     balances
-    orders))
+    orders
+    trades))
 
 (defun create-tables ()
   "Create all defined tables of the database if they do not already exist."

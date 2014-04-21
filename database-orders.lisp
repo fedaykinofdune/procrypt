@@ -24,11 +24,7 @@
           :col-type bigint)
    (quantity :accessor quantity
              :initarg :quantity
-             :col-type double-precision)
-   (closed :accessor closed
-           :initarg :closed
-           :col-type boolean
-           :col-default nil))
+             :col-type double-precision))
   (:keys id)
   (:metaclass dao-class))
 
@@ -51,13 +47,15 @@
               :price price
               :quantity quantity)))
 
-(defun update-order-closed (order-id)
-  "Updates the record of the given order id as closed."
+(defun update-order-complete (order-id)
+  "Updates an order as having been completed by copying the record to the
+   trades table and setting a new timestamp, then removing it from the orders
+   table."
   (with-connection *db*
     (let ((order-row (get-dao 'orders order-id)))
       (when order-row
-        (setf (closed order-row) t)
-        (update-dao order-row)))))
+        (insert-trade order-id)
+        (delete-dao order-row)))))
 
 (defun remove-order (order-id)
   "Removes the record of the given order id from the orders table."
@@ -66,34 +64,18 @@
       (when order-row
         (delete-dao order-row)))))
 
-(defun find-all-open-orders ()
-  "Returns a list of objects representing all open orders in the orders table,
+(defun find-all-orders ()
+  "Returns a list of objects representing all orders in the orders table,
    sorted by the time they were placed."
   (with-connection *db*
     (select-dao 'orders (:= 'closed nil)
                 'timestamp)))
 
-(defun find-all-closed-orders ()
-  "Returns a list of objects representing all closed orders in the orders
-   table, sorted by the time they were placed."
-  (with-connection *db*
-    (select-dao 'orders (:= 'closed t)
-                'timestamp)))
-
-(defun find-user-open-orders (user-id)
-  "Returns a list of objects representing all open orders in the orders
+(defun find-user-orders (user-id)
+  "Returns a list of objects representing all orders in the orders
    table for the given user id, sorted by the time they were placed."
   (with-connection *db*
     (select-dao 'orders (:and
                           (:= 'closed nil)
-                          (:= 'user-id user-id))
-                'timestamp)))
-
-(defun find-user-closed-orders (user-id)
-  "Returns a list of objects representing all closed orders in the orders
-   table for the given user id, sorted by the time they were placed."
-  (with-connection *db*
-    (select-dao 'orders (:and
-                          (:= 'closed t)
                           (:= 'user-id user-id))
                 'timestamp)))

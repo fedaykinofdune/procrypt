@@ -14,4 +14,5 @@
                (:file "database-coins")
                (:file "database-balances")
                (:file "database-orders")
+               (:file "database-trades")
                (:file "main")))
