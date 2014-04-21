@@ -18,8 +18,8 @@
   (with-connection *db*
     (when (table-exists-p table-name)
       (if cascade
-        (query (:cascade (:drop-table table-name)))
-        (query (:drop-table table-name)))
+        (execute (:cascade (:drop-table table-name)))
+        (execute (:drop-table table-name)))
       (format nil "Removed table: ~a" table-name))))
 
 (defun remove-all-tables ()

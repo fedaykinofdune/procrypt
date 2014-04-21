@@ -7,9 +7,9 @@
    (timestamp :accessor timestamp
               :initarg :timestamp
               :col-type bigint)
-   (user :accessor user
-         :initarg :user
-         :col-type text)
+   (user-id :accessor user-id
+            :initarg :user-id
+            :col-type integer)
    (action :accessor action
            :initarg :action
            :col-type text)
@@ -34,71 +34,66 @@
 
 (deftable orders
   (!dao-def)
-  (!foreign 'users 'user 'email)
+  (!foreign 'users 'user-id 'id)
   (!foreign 'coins 'base-coin 'code)
   (!foreign 'coins 'quote-coin 'code))
 
-(defun insert-order (&key user-email action base-coin quote-coin price
+(defun insert-order (&key user-id action base-coin quote-coin price
                           quantity)
+  "Insert a record into the orders table."
   (with-connection *db*
-    (insert-dao
-      (make-instance 'orders
-                     :user user-email
-                     :timestamp (get-universal-time)
-                     :action action
-                     :base-coin base-coin
-                     :quote-coin quote-coin
-                     :price price
-                     :quantity quantity)))) 
+    (make-dao 'orders
+              :user-id user-id
+              :timestamp (get-universal-time)
+              :action action
+              :base-coin base-coin
+              :quote-coin quote-coin
+              :price price
+              :quantity quantity)))
 
-(defun edit-order-as-closed (order-id)
+(defun update-order-closed (order-id)
+  "Updates the record of the given order id as closed."
   (with-connection *db*
-    (query
-      (:update 'orders :set 'closed '$1
-       :where (:= 'id order-id))
-      t)))
+    (let ((order-row (get-dao 'orders order-id)))
+      (when order-row
+        (setf (closed order-row) t)
+        (update-dao order-row)))))
 
 (defun remove-order (order-id)
+  "Removes the record of the given order id from the orders table."
   (with-connection *db*
-    (query
-      (:delete-from 'orders :where (:= 'id order-id)))))
+    (let ((order-row (get-dao 'orders order-id)))
+      (when order-row
+        (delete-dao order-row)))))
 
-(defun list-open-orders-by-time ()
+(defun find-all-open-orders ()
+  "Returns a list of objects representing all open orders in the orders table,
+   sorted by the time they were placed."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select '* :from 'orders
-         :where (:= 'closed nil))
-        'timestamp)
-      :plists)))
+    (select-dao 'orders (:= 'closed nil)
+                'timestamp)))
 
-(defun list-closed-orders-by-time ()
+(defun find-all-closed-orders ()
+  "Returns a list of objects representing all closed orders in the orders
+   table, sorted by the time they were placed."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select '* :from 'orders
-         :where (:= 'closed t))
-        'timestamp)
-      :plists)))
+    (select-dao 'orders (:= 'closed t)
+                'timestamp)))
 
-(defun list-user-open-orders (user-email)
+(defun find-user-open-orders (user-id)
+  "Returns a list of objects representing all open orders in the orders
+   table for the given user id, sorted by the time they were placed."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select '* :from 'orders
-         :where (:and
-                  (:= 'closed nil)
-                  (:= 'user user-email)))
-        'timestamp)
-      :plists)))
+    (select-dao 'orders (:and
+                          (:= 'closed nil)
+                          (:= 'user-id user-id))
+                'timestamp)))
 
-(defun list-user-closed-orders (user-email)
+(defun find-user-closed-orders (user-id)
+  "Returns a list of objects representing all closed orders in the orders
+   table for the given user id, sorted by the time they were placed."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select '* :from 'orders
-         :where (:and
-                  (:= 'closed t)
-                  (:= 'user user-email)))
-        'timestamp)
-      :plists)))
+    (select-dao 'orders (:and
+                          (:= 'closed t)
+                          (:= 'user-id user-id))
+                'timestamp)))

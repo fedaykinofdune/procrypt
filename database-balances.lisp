@@ -1,9 +1,9 @@
 (in-package :procrypt)
 
 (defclass balances ()
-  ((user :accessor user
-         :initarg :user
-         :col-type text) 
+  ((user-id :accessor user-id
+            :initarg :user-id
+            :col-type integer)
    (coin :accessor coin
          :initarg :coin
          :col-type text)
@@ -11,46 +11,47 @@
              :initarg :quantity
              :col-default 0
              :col-type double-precision))
-  (:keys user coin)
+  (:keys user-id coin)
   (:metaclass dao-class))
 
 (deftable balances
   (!dao-def)
-  (!foreign 'users 'user 'email)
+  (!foreign 'users 'user-id 'id)
   (!foreign 'coins 'coin 'code))
 
-(defun insert-balances (user-email)
+(defun insert-balances (user-id)
+  "Insert records for each coin into the balances table for the given
+   user id."
   (with-connection *db*
-    (dolist (coin-code (list-coin-codes))
-      (insert-dao
-        (make-instance 'balances
-                       :user user-email
-                       :coin coin-code)))))
+    (dolist (coin-row (find-all-coins))
+      (make-dao 'balances
+                :user-id user-id
+                :coin (code coin-row)))))
 
-(defun find-user-balance (user-email coin-code)
+(defun find-user-balance (user-id coin-code)
+  "Return an object representing the record from the balances table for
+   the given user id and coin code."
   (with-connection *db*
-    (query
-      (:select 'quantity
-       :from 'balances
-       :where (:and
-                (:= 'user user-email)
-                (:= 'coin coin-code))) :single)))
+    (first
+      (select-dao
+        'balances (:and
+                    (:= 'user-id user-id)
+                    (:= 'coin coin-code))))))
 
-(defun list-all-user-balances (user-email)
+(defun find-all-user-balances (user-id)
+  "Return a list of objects representing records from the balances table
+   of each coin for the given user id."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select 'coin 'quantity
-         :from 'balances
-         :where (:= 'user user-email))
-        'coin))))
+    (select-dao
+      'balances (:= 'user-id user-id)
+      'coin)))
 
-(defun list-positive-user-balances (user-email)
+(defun find-positive-user-balances (user-id)
+  "Return a list of objects representing records from the balances table
+   of each coin with a positive balance for the given user id."
   (with-connection *db*
-    (query
-      (:order-by
-        (:select 'coin 'quantity
-         :from 'balances
-         :where (:and
-                  (:= 'user user-email)
-                  (:> 'quantity 0))) 'coin))))
+    (select-dao
+      'balances (:and
+                  (:= 'user-id user-id)
+                  (:> 'quantity 0))
+      'coin)))

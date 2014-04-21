@@ -23,33 +23,39 @@
 (deftable coins
   (!dao-def))
 
-(defun find-coin-by-code (code)
-  (with-connection *db*
-    (query (:select '* :from 'coins :where (:= 'code code)) :plist)))
-
-(defun insert-coin (code name address port trade-fee)
-  (with-connection *db*
-    (unless (find-coin-by-code code)
-      (insert-dao
-        (make-instance 'coins
-                       :code code
-                       :name name
-                       :trade-fee trade-fee
-                       :address address
-                       :port port)))))
-
-(defun insert-coin-balances (coin-code)
-  (with-connection *db*
-    (dolist (user-email (list-user-emails))
-      (insert-dao
-        (make-instance 'balances
-                       :user user-email
-                       :coin coin-code)))))
-
-(defun list-coin-codes ()
-  (with-connection *db*
-    (query (:select 'code :from 'coins) :column)))
-
 (defun add-new-coin (&key code name address port (trade-fee 0.2))
+  "Top-level function responsible for adding a new record to the coins table,
+   and adding records for the balance of that coin for each user to the
+   balances table."
   (insert-coin code name address port trade-fee)
   (insert-coin-balances code))
+
+(defun insert-coin (code name address port trade-fee)
+  "Insert a record into the coins table."
+  (with-connection *db*
+    (unless (find-coin-by-code code)
+      (make-dao 'coins
+                :code code
+                :name name
+                :trade-fee trade-fee
+                :address address
+                :port port))))
+
+(defun insert-coin-balances (coin-code)
+  "Insert a record for the given coin into the balances table for all users."
+  (with-connection *db*
+    (dolist (user-row (find-all-users))
+      (make-dao 'balances
+                :user-id (id user-row)
+                :coin coin-code))))
+
+(defun find-coin-by-code (coin-code)
+  "Returns an object representing a record in the coins table with the given
+   coin code."
+  (with-connection *db*
+    (get-dao 'coins coin-code)))
+
+(defun find-all-coins ()
+  "Returns a list of all coin row objects."
+  (with-connection *db*
+    (select-dao 'coins)))
