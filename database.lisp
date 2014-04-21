@@ -1,6 +1,7 @@
 (in-package :procrypt)
 
 (defparameter *db* '("procrypt" "axion" nil "localhost"))
+
 (defparameter *table-names*
   '(users
     coins
@@ -8,6 +9,7 @@
     orders))
 
 (defun create-tables ()
+  "Create all defined tables of the database if they do not already exist."
   (with-connection *db*
     (dolist
       (table-name *table-names*)
@@ -15,6 +17,7 @@
         (create-table table-name)))))
 
 (defun remove-table (table-name &key (cascade nil))
+  "Remove the given table from the database."
   (with-connection *db*
     (when (table-exists-p table-name)
       (if cascade
@@ -23,6 +26,7 @@
       (format nil "Removed table: ~a" table-name))))
 
 (defun remove-all-tables ()
+  "Remove all tables from the database."
   (with-connection *db*
     (dolist
       (table-name *table-names*)
