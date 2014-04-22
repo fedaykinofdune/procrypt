@@ -1,6 +1,8 @@
 (defpackage #:procrypt
   (:use :cl
         :postmodern
+        :hunchentoot
+        :sexml
         :cl-fad
         :babel)
   (:import-from :ironclad
