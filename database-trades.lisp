@@ -50,8 +50,4 @@
   "Return a list of objects representing trade records for the given user id,
    sorted by the time they were traded."
   (with-connection *db*
-    (select-dao 'trades (:and
-                          (:=)
-                          ))
-    )
-  )
+    (select-dao 'trades (:= 'user-id user-id) 'timestamp)))
