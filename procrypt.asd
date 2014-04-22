@@ -5,6 +5,7 @@
   :depends-on (:postmodern
                :hunchentoot
                :sexml
+               :css-lite
                :cl-fad
                :ironclad
                :babel)
@@ -24,6 +25,9 @@
                  :components
                    ((:file "config")
                     (:file "server")
+                    (:file "documents")
+                    (:file "style")
                     (:module "modules"
                       :components
-                        ((:file "admin")))))))
+                        ((:file "overview")
+                         (:file "admin")))))))

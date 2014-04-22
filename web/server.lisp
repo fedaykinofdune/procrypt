@@ -60,9 +60,9 @@
 (defun home ()
   "An alias for the web server used to redirect traffic to the main web site
    module."
-  (redirect "/admin"))
+  (redirect "/overview"))
 
 (defun 404-dispatcher (request)
-  "Defines a error page for redirecting traffic to when a web site path does
+  "Defines an error page for redirecting traffic to when a web site path does
    not exist."
   '404-page)

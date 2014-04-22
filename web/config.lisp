@@ -27,7 +27,8 @@
                  :email "procrypt@example.com"
                  :port 12345
                  :root "static/"
-                 :modules '(module-admin "/admin")
+                 :modules '(module-overview "/overview"
+                            module-admin "/admin")
                  :routes '(404 "/404"
                            home "/"
                            site-style "/site.css")))
