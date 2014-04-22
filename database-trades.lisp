@@ -45,3 +45,13 @@
       (let ((trade-row (get-dao 'trades order-id)))
         (setf (timestamp trade-row) (get-universal-time))
         (update-dao trade-row)))))
+
+(defun find-user-trades (user-id)
+  "Return a list of objects representing trade records for the given user id,
+   sorted by the time they were traded."
+  (with-connection *db*
+    (select-dao 'trades (:and
+                          (:=)
+                          ))
+    )
+  )

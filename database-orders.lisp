@@ -64,18 +64,17 @@
       (when order-row
         (delete-dao order-row)))))
 
-(defun find-all-orders ()
-  "Returns a list of objects representing all orders in the orders table,
-   sorted by the time they were placed."
+(defun find-market-orders (base-coin-code quote-coin-code)
+  "Returns a list of objects representing all orders in the orders table
+   matching the given trade pair, sorted by the time they were placed."
   (with-connection *db*
-    (select-dao 'orders (:= 'closed nil)
+    (select-dao 'orders (:and
+                          (:= 'base-coin base-coin-code)
+                          (:= 'quote-coin quote-coin-code))
                 'timestamp)))
 
 (defun find-user-orders (user-id)
   "Returns a list of objects representing all orders in the orders
    table for the given user id, sorted by the time they were placed."
   (with-connection *db*
-    (select-dao 'orders (:and
-                          (:= 'closed nil)
-                          (:= 'user-id user-id))
-                'timestamp)))
+    (select-dao 'orders (:= 'user-id user-id) 'timestamp)))
