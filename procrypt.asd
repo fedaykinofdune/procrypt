@@ -21,5 +21,6 @@
                     (:file "database-trades")))
                (:module "web"
                  :components
-                   ((:file "config")))
+                   ((:file "config")
+                    (:file "server")))
                (:file "main")))
