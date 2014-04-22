@@ -56,6 +56,10 @@
     (get-dao 'coins coin-code)))
 
 (defun find-all-coins ()
-  "Returns a list of all coin row objects."
+  "Returns a list of objects representing all records in the coins table,
+   sorted by coin code."
   (with-connection *db*
-    (select-dao 'coins)))
+    (query-dao 'coins
+               (:order-by
+                 (:select '* :from 'coins)
+                 'code))))
