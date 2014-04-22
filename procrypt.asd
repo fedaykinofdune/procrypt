@@ -11,6 +11,7 @@
   :serial t
   :components ((:file "packages")
                (:file "utils")
+               (:file "main")
                (:module "database"
                  :components
                    ((:file "database")
@@ -22,5 +23,7 @@
                (:module "web"
                  :components
                    ((:file "config")
-                    (:file "server")))
-               (:file "main")))
+                    (:file "server")
+                    (:module "modules"
+                      :components
+                        ((:file "admin")))))))
