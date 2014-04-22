@@ -64,19 +64,27 @@
       (when order-row
         (delete-dao order-row)))))
 
-(defun find-market-orders (base-coin-code quote-coin-code)
-  "Returns a list of objects representing the last 100 orders in the orders
-   table matching the given trade pair."
+(defun find-market-bids (base-coin quote-coin)
+  "Returns a list of objects representing all bid orders in the orders table
+   matching the given trade pair, sorted by the bid price."
   (with-connection *db*
-    (query-dao 'orders
-               (:limit
-                 (:order-by
-                   (:select '* :from 'trades
-                    :where (:and
-                             (:= 'base-coin base-coin-code)
-                             (:= 'quote-coin quote-coin-code)))
-                   (:desc 'timestamp))
-                 100))))
+    (select-dao 'orders
+                (:and
+                  (:= 'base-coin base-coin)
+                  (:= 'quote-coin quote-coin)
+                  (:= 'action "bid"))
+                (:desc 'price))))
+
+(defun find-market-asks (base-coin quote-coin)
+  "Returns a list of objects representing all ask orders in the orders table
+   matching the given trade pair, sorted by the ask price."
+  (with-connection *db*
+    (select-dao 'orders
+                (:and
+                  (:= 'base-coin base-coin)
+                  (:= 'quote-coin quote-coin)
+                  (:= 'action "ask"))
+                'price)))
 
 (defun find-user-orders (user-id)
   "Returns a list of objects representing all orders in the orders
