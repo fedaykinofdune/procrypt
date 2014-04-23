@@ -15,21 +15,24 @@
              :col-type text)
    (salt :accessor salt
          :initarg :salt
-         :col-type text))
+         :col-type text)
+   (admin :accessor admin
+          :initarg :admin
+          :col-type boolean))
   (:keys id)
   (:metaclass dao-class))
 
 (deftable users
   (!dao-def))
 
-(defun add-new-user (&key user-name email password)
+(defun add-new-user (&key user-name email password admin-p)
   "Top-level function responsible for adding a new record to the users
    table, and all the coin balance records to the balances table."
-  (let ((user-id (insert-user user-name email password)))
+  (let ((user-id (insert-user user-name email password admin-p)))
     (when user-id
       (insert-balances user-id))))
 
-(defun insert-user (user-name email password)
+(defun insert-user (user-name email password admin-p)
   "Insert a new user record into the users table returning its user id."
   (with-connection *db*
     (unless (find-user-by-email email)
@@ -38,7 +41,8 @@
                   :name user-name
                   :email email
                   :password (getf password-hash :hash)
-                  :salt (getf password-hash :salt))
+                  :salt (getf password-hash :salt)
+                  :admin admin-p)
         (id (find-user-by-email email))))))
 
 (defun find-all-users ()

@@ -8,17 +8,20 @@
        (<:meta :http-equiv "Content-Type" :content "text/html; charset=utf-8")
        (<:meta :name "author" :content
          (format nil "~a <~a>" (title *config*) (email *config*)))
-       (<:link :rel "stylesheet" :type "text/css" :href "/site.css"))
+       (<:link :rel "stylesheet" :type "text/css" :href "/site.css")
+       (<:link :rel "stylesheet" :type "text/css"
+               :href "http://fonts.googleapis.com/css?family=Ubuntu"))
      (<:body
        (<:div :id "header"
          (<:div :id "header-content"
            (<:div :id "title" (title *config*))
-           (navigation-menu :selected ,selected)
-           (<:div :id "header-right")))
+           (navigation-menu :selected ,selected)))
        (<:div :id "wrapper" ,@body)
        (<:div :id "footer"
-         "&copy;2014-" (nth-value 5 (get-decoded-time))
-         " " (<:a :href (format nil "mailto:~a" (email *config*)) "Procrypt")))))
+         (format nil "&copy;2014-~a ~a"
+                 (nth-value 5 (get-decoded-time))
+                 (<:a :href (format nil "mailto:~a" (email *config*))
+                      "Procrypt"))))))
 
 (defmacro navigation-menu (&key (selected ""))
   "Generates the navigation menu with the current page highlighted."
@@ -30,7 +33,12 @@
      `(<:ul :id "menu"
        ,(menu-item "/overview" "Overview")
        ,(menu-item "/wallets" "Wallets")
-       ,(menu-item "/markets" "Markets"))))
+       ,(menu-item "/markets" "Markets")
+       ,(menu-item "/account" "Account")
+       ,(menu-item "/admin" "Admin")
+       (<:div :id "login"
+          ,(<:li (<:a :href "/login" "Login"))
+          ,(<:li (<:a :href "/signup" "Sign Up"))))))
 
 (defmacro content-main ((&key title) &body body)
   "Generates the main section of the current page."

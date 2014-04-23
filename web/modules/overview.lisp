@@ -7,10 +7,11 @@
            :initform '(overview ""))))
 
 (defun overview ()
-  (let ((title "Home"))
+  "The main overview section of the web site."
+  (let ((title "Overview"))
     (generic-page
       (:title title
-       :selected "home")
+       :selected "Overview")
       (content-main
         (:title title)
         "Test"

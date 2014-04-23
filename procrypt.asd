@@ -30,4 +30,5 @@
                     (:module "modules"
                       :components
                         ((:file "overview")
+                         (:file "account")
                          (:file "admin")))))))

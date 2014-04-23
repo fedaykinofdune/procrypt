@@ -4,9 +4,7 @@
   "Creates a new web server object listening for connections."
   (make-instance 'easy-acceptor
                  :port (port *config*)
-                 :document-root (get-path "web" (root *config*))
-                 :access-log-destination nil
-                 :message-log-destination nil))
+                 :document-root (get-path "web" (root *config*))))
 
 (defun start-web-server ()
   "Configures and starts the web server."

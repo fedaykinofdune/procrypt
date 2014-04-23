@@ -16,21 +16,28 @@
             :col-type text)
    (port :accessor port
          :initarg :port
-         :col-type integer))
+         :col-type integer)
+   (username :accessor username
+             :initarg :username
+             :col-type text)
+   (password :accessor password
+             :initarg :password
+             :col-type text))
   (:keys code)
   (:metaclass dao-class))
 
 (deftable coins
   (!dao-def))
 
-(defun add-new-coin (&key code name address port (trade-fee 0.2))
+(defun add-new-coin (&key code name address port username password
+                          (trade-fee 0.2))
   "Top-level function responsible for adding a new record to the coins table,
    and adding records for the balance of that coin for each user to the
    balances table."
-  (insert-coin code name address port trade-fee)
+  (insert-coin code name address port username password trade-fee)
   (insert-coin-balances code))
 
-(defun insert-coin (code name address port trade-fee)
+(defun insert-coin (code name address port username password trade-fee)
   "Insert a record into the coins table."
   (with-connection *db*
     (unless (find-coin-by-code code)
@@ -39,7 +46,16 @@
                 :name name
                 :trade-fee trade-fee
                 :address address
-                :port port))))
+                :port port
+                :username username
+                :password password))))
+
+(defun remove-coin (coin-code)
+  "Removes a coin from the coins table."
+  (with-connection *db*
+    (let ((coin-row (get-dao 'coins coin-code)))
+      (when coin-row
+        (delete-dao coin-row)))))
 
 (defun insert-coin-balances (coin-code)
   "Insert a record for the given coin into the balances table for all users."
