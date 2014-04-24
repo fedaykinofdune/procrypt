@@ -14,17 +14,19 @@
      (:text-decoration "none"
       :color "#38a5ff"))
     (("#header")
-     (:padding-top "1em"
-      :height "3em"
+     (:padding "0.5em 0 0.5em 0"
       :background-color "#444"))
     (("#header-content")
-     (:white-space "nowrap"
-      :display "flex"))
+     (:width "22em"
+      :display "inline-block"
+      :vertical-align "middle"
+      ))
     (("#title")
      (:color "#38a5ff"
-      :font-size "20pt"
-      :display "inline-block"
-      :margin "0 2em 0 1em"))
+      :font "24pt Exo"
+      :font-weight "bold"
+      :font-style "italic"
+      :text-align "center"))
     (("#title span")
      (:color "#fa7000"))
     (("#menu")
@@ -45,14 +47,29 @@
       :border-radius "0.5em"))
     (("#menu li.selected a")
      (:color "#eee"))
-    (("#menu #login")
-     (:position "absolute"
-      :top 0
-      :right 0
-      :padding "1em 1em 0 0")) 
-    (("#main")
-     (
+    (("#wrapper")
+     (:margin-top "2em"))
+    (("#sidebar")
+     (:width "20em"
+      :float "left"
+      :color "#444"
+      :padding-bottom "2em"
+      :text-align "center"))
+    (("#sidebar h1")
+     (:margin "0 0 1em 0"
+      :font-size "14pt"))
+    (("#sidebar table")
+     (:width "100%"
+      :border "1px solid #ddd"
+      :font-size "10pt"
       ))
+    (("#sidebar table td")
+     (:padding "0.5em"))
+    (("#sidebar-content")
+     (:padding "0 1em"))
+    (("#main")
+     (:padding "0 22em")
+     )
     (("#footer")
      (:padding "1em 0 1em 0"
       :font-size "8pt"
@@ -60,5 +77,6 @@
       :line-height "1em"
       :text-align "center"
       :color "#eee"
+      :clear "both"
       :background-color "#444"
       :border-top "1px solid #ddd"))))

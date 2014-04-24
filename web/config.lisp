@@ -28,8 +28,7 @@
                  :port 12345
                  :root "static/"
                  :modules '(module-overview "/overview"
-                            module-account "/account"
-                            module-admin "/admin")
+                            module-account "/account")
                  :routes '(404 "/404"
                            home "/"
                            site-style "/site.css")))

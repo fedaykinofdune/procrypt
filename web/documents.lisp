@@ -10,13 +10,15 @@
          (format nil "~a <~a>" (title *config*) (email *config*)))
        (<:link :rel "stylesheet" :type "text/css" :href "/site.css")
        (<:link :rel "stylesheet" :type "text/css"
-               :href "http://fonts.googleapis.com/css?family=Ubuntu"))
+               :href "http://fonts.googleapis.com/css?family=Ubuntu")
+       (<:link :rel "stylesheet" :type "text/css"
+               :href "http://fonts.googleapis.com/css?family=Exo:800italic"))
      (<:body
        (<:div :id "header"
          (<:div :id "header-content"
-           (<:div :id "title" (title *config*))
-           (navigation-menu :selected ,selected)))
-       (<:div :id "wrapper" ,@body)
+           (<:div :id "title" (title *config*)))
+           (navigation-menu :selected ,selected))
+       ,@body
        (<:div :id "footer"
          (format nil "&copy;2014-~a ~a"
                  (nth-value 5 (get-decoded-time))
@@ -34,17 +36,26 @@
        ,(menu-item "/overview" "Overview")
        ,(menu-item "/wallets" "Wallets")
        ,(menu-item "/markets" "Markets")
-       ,(menu-item "/account" "Account")
-       ,(menu-item "/admin" "Admin")
-       (<:div :id "login"
-          ,(<:li (<:a :href "/login" "Login"))
-          ,(<:li (<:a :href "/signup" "Sign Up"))))))
+       ,(menu-item "/account" "Account"))))
 
-(defmacro content-main ((&key title) &body body)
+(defmacro content (&body body)
   "Generates the main section of the current page."
-  `(<:div :id "main"
-    (<:h1 ,title)
-    ,@body))
+  `(<:div :id "wrapper"
+    (<:div :id "sidebar"
+      (sidebar))
+    (<:div :id "main"
+      ,@body)))
+
+(defun sidebar ()
+  (<:div :id "sidebar-content"
+    (<:h1 "Markets")
+    (<:table
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")
+        )
+    ))
+  )
 
 (defun 404-page ()
   "The page displayed when a path on the web server cannot be found."

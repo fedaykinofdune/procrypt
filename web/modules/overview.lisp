@@ -8,11 +8,9 @@
 
 (defun overview ()
   "The main overview section of the web site."
-  (let ((title "Overview"))
-    (generic-page
-      (:title title
-       :selected "Overview")
-      (content-main
-        (:title title)
-        "Test"
-        ))))
+  (generic-page
+    (:title "Overview"
+     :selected "Overview")
+    (content
+      "content"
+      )))
