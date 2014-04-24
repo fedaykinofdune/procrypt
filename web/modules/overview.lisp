@@ -11,6 +11,5 @@
   (generic-page
     (:title "Overview"
      :selected "Overview")
-    (content
-      "content"
-      )))
+    "Test"
+    ))

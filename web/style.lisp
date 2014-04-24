@@ -4,40 +4,60 @@
   "Generates the stylesheet for the web site."
   (setf (content-type* *reply*) "text/css")
   (css
+    (("#html")
+     (:height "100%"))
     (("body")
      (:margin 0
       :padding 0
+      :height "100%"
       :font "12pt Ubuntu"
       :background-color "#eee"
       :color "#444"))
     (("a")
      (:text-decoration "none"
       :color "#38a5ff"))
+    (("#wrapper")
+     (:min-height "100%"
+      :position "relative"))
+    (("#content")
+     (:margin-top "30px"
+      :padding-top "2em"))
+
+    ;; generic classes
+    ((".left")
+     (:float "left"))
+    ((".right")
+     (:float "right"))
+    ((".no-select")
+     (:user-select "none"
+      :-moz-user-select "none"
+      :-webkit-user-select "none"
+      :-khtml-user-select "none"
+      :-o-user-select "none"
+      :user-select "none"))
 
     ;; header
     (("#header")
      (:padding "1em 0"
       :position "fixed"
       :top 0
+      :z-index "10"
       :width "100%"
       :height "30px"
       :background-color "#444"))
     (("#header-content")
-     (:width "21em"
-      :float "left"))
+     (:width "21em"))
     (("#title")
      (:color "#38a5ff"
-      :font "24pt Exo"
+      :cursor "default"
+      :font "italic bold 24pt Exo"
       :line-height "30px"
-      :font-weight "bold"
-      :font-style "italic"
       :text-align "center"))
-
-    ;; menu
+    (("#title span")
+     (:color "#eee"))
     (("#menu")
      (:margin 0
-      :padding 0
-      :float "left"))
+      :padding 0))
     (("#menu li")
      (:display "inline-block"
       :list-style "none"
@@ -52,20 +72,17 @@
       :border-radius "0.5em"))
     (("#menu li.selected a")
      (:color "#eee"))
-    (("#wrapper")
-     (:margin-top "3em"))
 
     ;; sidebar
     (("#sidebar")
      (:width "20em"
-      :float "left"
+      :height "100%"
       :color "#444"
-      :padding "2em 0"
-      :text-align "center"
-      :border-right "1px solid #aaa"))
+      :text-align "center"))
     (("#sidebar-content")
-     (:padding "0 1em"
-      :height "100%")) 
+     (:padding "1em 1em 3em 1em"
+      :min-height "100%"
+      :border-right "1px solid #aaa"))
     (("#sidebar h1")
      (:margin "0 0 1em 0"
       :font-size "14pt"))
@@ -78,18 +95,17 @@
 
     ;; main
     (("#main")
-     (:padding "2em 21em"))
+     (:padding "1em 1em"))
 
     ;; footer
     (("#footer")
-     (:padding "1em 0 1em 0"
+     (:padding "1em 0"
       :position "fixed"
-      :bottom 0
       :width "100%"
-      :font-size "8pt"
-      :font-size "8pt"
+      :height "1em"
+      :bottom 0
+      :font "8pt monospace"
       :line-height "1em"
       :text-align "center"
       :color "#eee"
-      :clear "both"
       :background-color "#444"))))

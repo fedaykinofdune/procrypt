@@ -22,7 +22,7 @@
 
 (defparameter *config*
   (make-instance 'config
-                 :title "Procrypt"
+                 :title "ProCrypt"
                  :subtitle "Some tagline"
                  :email "procrypt@example.com"
                  :port 12345

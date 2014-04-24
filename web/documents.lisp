@@ -15,15 +15,18 @@
                :href "http://fonts.googleapis.com/css?family=Exo:800italic"))
      (<:body
        (<:div :id "header"
-         (<:div :id "header-content"
-           (<:div :id "title" (title *config*)))
+         (<:div :id "header-content" :class "left"
+           (<:div :id "title" :class "no-select" (<:span "Pro") "Crypt"))
            (navigation-menu :selected ,selected))
-       ,@body
+       (<:div :id "wrapper"
+         (<:div :id "content"
+           (<:div :id "sidebar" :class "left" (sidebar))
+           (<:div :id "main" :class "left" ,@body))
        (<:div :id "footer"
          (format nil "&copy;2014-~a ~a"
                  (nth-value 5 (get-decoded-time))
                  (<:a :href (format nil "mailto:~a" (email *config*))
-                      "Procrypt"))))))
+                      "ProCrypt")))))))
 
 (defmacro navigation-menu (&key (selected ""))
   "Generates the navigation menu with the current page highlighted."
@@ -32,28 +35,96 @@
        ,@(when (string= title selected)
            (list :class "selected"))
        (<:a :href ,path ,title))))
-     `(<:ul :id "menu"
-       ,(menu-item "/overview" "Overview")
-       ,(menu-item "/wallets" "Wallets")
-       ,(menu-item "/markets" "Markets")
-       ,(menu-item "/account" "Account"))))
-
-(defmacro content (&body body)
-  "Generates the main section of the current page."
-  `(<:div :id "wrapper"
-    (<:div :id "sidebar"
-      (sidebar))
-    (<:div :id "main"
-      ,@body)))
+    `(list
+       (<:ul :id "menu" :class "left"
+         ,(menu-item "/overview" "Overview")
+         ,(menu-item "/wallets" "Wallets")
+         ,(menu-item "/markets" "Markets")
+         ,(menu-item "/account" "Account"))
+       (<:ul :id "menu" :class "right"
+         ,(menu-item "/login" "Login")
+         ,(menu-item "/signup" "Sign Up")))))
 
 (defun sidebar ()
   (<:div :id "sidebar-content"
-    (<:h1 "Markets")
+    (<:h1 "Bitcoin Markets")
     (<:table
       (<:tr
         (<:td "Coin")
-        (<:td "Price")
-        )
+        (<:td "Price"))
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+     (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+     (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+
     ))
   )
 
