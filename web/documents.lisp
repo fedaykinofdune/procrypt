@@ -17,16 +17,16 @@
        (<:div :id "header"
          (<:div :id "header-content" :class "left"
            (<:div :id "title" :class "no-select" (<:span "Pro") "Crypt"))
-           (navigation-menu :selected ,selected))
-       (<:div :id "wrapper"
-         (<:div :id "content"
-           (<:div :id "sidebar" :class "left" (sidebar))
-           (<:div :id "main" :class "left" ,@body))
+           (navigation-menu :selected ,selected))  
+       (<:div :id "content"
+         (<:div :id "sidebar" :class "left" (sidebar))
+         (<:div :id "main"
+           (<:div :id "main-content" ,@body)))
        (<:div :id "footer"
          (format nil "&copy;2014-~a ~a"
                  (nth-value 5 (get-decoded-time))
                  (<:a :href (format nil "mailto:~a" (email *config*))
-                      "ProCrypt")))))))
+                      "ProCrypt"))))))
 
 (defmacro navigation-menu (&key (selected ""))
   "Generates the navigation menu with the current page highlighted."
@@ -123,9 +123,87 @@
         (<:td "Price")) 
        (<:tr
         (<:td "Coin")
+        (<:td "Price")))
+        (<:h1 "Litecoin Markets")
+    (<:table
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price"))
+      (<:tr
+        (<:td "Coin")
         (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+     (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+     (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+      (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")) 
+       (<:tr
+        (<:td "Coin")
+        (<:td "Price")))
+  
+    )
 
-    ))
   )
 
 (defun 404-page ()

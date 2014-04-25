@@ -16,12 +16,9 @@
     (("a")
      (:text-decoration "none"
       :color "#38a5ff"))
-    (("#wrapper")
-     (:min-height "100%"
-      :position "relative"))
     (("#content")
-     (:margin-top "30px"
-      :padding-top "2em"))
+     (:position "relative"
+      :top "4em"))
 
     ;; generic classes
     ((".left")
@@ -33,8 +30,7 @@
       :-moz-user-select "none"
       :-webkit-user-select "none"
       :-khtml-user-select "none"
-      :-o-user-select "none"
-      :user-select "none"))
+      :-o-user-select "none"))
 
     ;; header
     (("#header")
@@ -43,15 +39,15 @@
       :top 0
       :z-index "10"
       :width "100%"
-      :height "30px"
+      :height "2em"
       :background-color "#444"))
     (("#header-content")
      (:width "21em"))
     (("#title")
      (:color "#38a5ff"
       :cursor "default"
-      :font "italic bold 24pt Exo"
-      :line-height "30px"
+      :font "italic bold 2em Exo"
+      :line-height "1em"
       :text-align "center"))
     (("#title span")
      (:color "#eee"))
@@ -61,7 +57,7 @@
     (("#menu li")
      (:display "inline-block"
       :list-style "none"
-      :line-height "30px"
+      :line-height "2em"
       :padding "0 1em"))
     (("#menu li a")
      (:color "#eee"))
@@ -80,7 +76,8 @@
       :color "#444"
       :text-align "center"))
     (("#sidebar-content")
-     (:padding "1em 1em 3em 1em"
+     (:padding "1em"
+      :margin-bottom "2em"
       :min-height "100%"
       :border-right "1px solid #aaa"))
     (("#sidebar h1")
@@ -89,13 +86,20 @@
     (("#sidebar table")
      (:width "100%"
       :border "1px solid #ddd"
-      :font-size "10pt"))
+      :margin-bottom "1em"
+      :font-size "14pt"))
     (("#sidebar table td")
-     (:padding "0.5em"))
+     (:padding "0.5em"
+      :font-size "10pt"))
 
     ;; main
     (("#main")
-     (:padding "1em 1em"))
+     (:padding "1em"
+      :margin-left "20em"
+      ))
+    (("#main-content")
+     (:font-size "32pt")
+     )
 
     ;; footer
     (("#footer")
@@ -105,7 +109,6 @@
       :height "1em"
       :bottom 0
       :font "8pt monospace"
-      :line-height "1em"
       :text-align "center"
       :color "#eee"
       :background-color "#444"))))
