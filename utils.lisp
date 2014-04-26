@@ -27,3 +27,9 @@
     (pbkdf2-hash-password (string-to-octets password))
     (list :hash (byte-array-to-hex-string hash)
           :salt (byte-array-to-hex-string salt))))
+
+(defun encode-json (data)
+  "Encode a lisp association list to JSON data."
+  (with-output-to-string (*standard-output*)
+    (encode-alist data)))
+

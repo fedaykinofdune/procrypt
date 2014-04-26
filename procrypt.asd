@@ -8,10 +8,14 @@
                :css-lite
                :cl-fad
                :ironclad
-               :babel)
+               :babel
+               :drakma
+               :yason
+               :trivial-timeout)
   :serial t
   :components ((:file "packages")
                (:file "utils")
+               (:file "rpc-client")
                (:file "main")
                (:module "database"
                  :components
@@ -30,5 +34,6 @@
                     (:module "modules"
                       :components
                         ((:file "overview")
+                         (:file "trade")
                          (:file "account")
                          (:file "admin")))))))
