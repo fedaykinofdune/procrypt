@@ -45,7 +45,6 @@
      (:width "21em"))
     (("#title")
      (:color "#38a5ff"
-      :cursor "default"
       :font "italic bold 2em Exo"
       :line-height "1em"
       :text-align "center"))
@@ -79,27 +78,78 @@
      (:padding "1em"
       :margin-bottom "2em"
       :min-height "100%"
-      :border-right "1px solid #aaa"))
+      :border-right "1px solid #ddd"))
     (("#sidebar h1")
      (:margin "0 0 1em 0"
-      :font-size "14pt"))
+      :font-size "14pt"
+      :font-weight "normal"))
     (("#sidebar table")
      (:width "100%"
-      :border "1px solid #ddd"
-      :margin-bottom "1em"
-      :font-size "14pt"))
+      :border "1px solid #444"
+      :border-radius "0.5em"
+      :border-spacing 0
+      :margin-bottom "1em"))
+    (("#sidebar table tr:first-child td:first-child")
+     (:border-top-left-radius "0.5em"))
+    (("#sidebar table tr:first-child td:nth-child(2)")
+     (:border-top-right-radius "0.5em"))
+    (("#sidebar table tr:last-child td:first-child")
+     (:border-bottom-left-radius "0.5em"))
+    (("#sidebar table tr:last-child td:last-child")
+     (:border-bottom-right-radius "0.5em"))
+    (("#sidebar table tr:nth-child(odd) td")
+     (:background-color "#ddd"))
+    (("#sidebar table tr:nth-child(even) td")
+     (:background-color "#eee"))
+    (("#sidebar table tr:first-child td")
+     (:background-color "#38a5ff"
+      :font-weight "bold"
+      :color "#eee"))
     (("#sidebar table td")
-     (:padding "0.5em"
-      :font-size "10pt"))
+     (:padding "0.5em 1em"
+      :font "10pt Ubuntu"))
 
     ;; main
     (("#main")
-     (:padding "1em"
-      :margin-left "20em"
-      ))
+     (:margin-left "20em"))
+    (("#main h1")
+     (:font-size "16pt"
+      :margin "0 0 1em 0"))
     (("#main-content")
-     (:font-size "32pt")
-     )
+     (:padding "1em"))
+    ((".half")
+     (:width "50%"
+      :display "inline-block"))
+
+    ;; trade
+    (("#market-graph")
+     (:height "15em"
+      :line-height "15em"
+      :text-align "center"
+      :border "1px solid #444"
+      :margin-bottom "1em"))
+    ((".half:last-child #trade-block")
+     (:margin-right 0))
+    (("#trade-block")
+     (:border-top-left-radius "0.5em"
+      :border-top-right-radius "0.5em"
+      :margin-right "1em"))
+    (("#trade-block .header")
+     (:background-color "#38a5ff"
+      :border "1px solid #444"
+      :border-top-left-radius "0.5em"
+      :border-top-right-radius "0.5em"
+      :padding "0.5em"
+      :font "bold 12pt Ubuntu"
+      :color "#eee"))
+    (("#trade-block .content")
+     (:border-left "1px solid #444"
+      :border-right "1px solid #444"
+      :border-bottom "1px solid #444"
+      :border-bottom-left-radius "0.5em"
+      :border-bottom-right-radius "0.5em"
+      :padding "0.5em"
+      :font-size "11pt"))
 
     ;; footer
     (("#footer")

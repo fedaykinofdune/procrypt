@@ -16,7 +16,8 @@
      (<:body
        (<:div :id "header"
          (<:div :id "header-content" :class "left"
-           (<:div :id "title" :class "no-select" (<:span "Pro") "Crypt"))
+           (<:div :id "title" :class "no-select"
+             (<:a :href "/" (<:span "Pro") "Crypt")))
            (navigation-menu :selected ,selected))  
        (<:div :id "content"
          (<:div :id "sidebar" :class "left" (sidebar))
@@ -38,8 +39,9 @@
     `(list
        (<:ul :id "menu" :class "left"
          ,(menu-item "/overview" "Overview")
+         ,(menu-item "/trade" "Trade")
          ,(menu-item "/wallets" "Wallets")
-         ,(menu-item "/markets" "Markets")
+         ,(menu-item "/help" "Help")
          ,(menu-item "/account" "Account"))
        (<:ul :id "menu" :class "right"
          ,(menu-item "/login" "Login")
@@ -208,10 +210,8 @@
 
 (defun 404-page ()
   "The page displayed when a path on the web server cannot be found."
-  (let ((title "Page Not Found"))
-    (generic-page
-      (:title title)
-      (content-main
-        (:title title)
-        (<:p "The requested page was not found.")
-        (<:p (<:a :href "/" "Go back"))))))
+  (generic-page
+    (:title "Page Not Found")
+    (<:h1 "Page Not Found")
+    (<:p "The requested page was not found.")
+    (<:p (<:a :href "/" "Go back"))))
