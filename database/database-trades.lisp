@@ -46,7 +46,7 @@
         (setf (timestamp trade-row) (get-universal-time))
         (update-dao trade-row)))))
 
-(defun find-market-trades (base-coin-code quote-coin-code)
+(defun find-market-trades (base-coin-code quote-coin-code &key (limit 100))
   "Return a list of objects representing the last 100 trade records for the
    given trade pair."
   (with-connection *db*
@@ -58,7 +58,7 @@
                              (:= 'base-coin base-coin-code)
                              (:= 'quote-coin quote-coin-code)))
                    (:desc 'timestamp))
-                 100))))
+                 limit))))
 
 (defun find-user-trades (user-id)
   "Return a list of objects representing trade records for the given user id,

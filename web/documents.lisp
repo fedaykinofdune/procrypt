@@ -47,6 +47,13 @@
          ,(menu-item "/login" "Login")
          ,(menu-item "/signup" "Sign Up")))))
 
+(defun sidebar-prices (base-coin)
+  (loop for coin in (find-coins-by-base base-coin)
+        for code = (code coin)
+        for last-trade = (car (find-market-trades base-coin code :limit 1))
+        for price = (satoshi->string (if last-trade (price last-trade) 0))
+        collect (<:tr (<:td code) (<:td price))))
+
 (defun sidebar ()
   (<:div :id "sidebar-content"
     (<:h1 "Bitcoin Markets")
@@ -54,159 +61,14 @@
       (<:tr
         (<:td "Coin")
         (<:td "Price"))
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-     (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-     (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")))
-        (<:h1 "Litecoin Markets")
+      (sidebar-prices "BTC"))
+    
+    (<:h1 "Litecoin Markets")
     (<:table
       (<:tr
         (<:td "Coin")
         (<:td "Price"))
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-     (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-     (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-      (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")) 
-       (<:tr
-        (<:td "Coin")
-        (<:td "Price")))
-  
-    )
-
-  )
+      (sidebar-prices "LTC"))))
 
 (defun 404-page ()
   "The page displayed when a path on the web server cannot be found."

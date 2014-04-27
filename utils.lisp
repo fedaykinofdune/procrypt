@@ -33,3 +33,13 @@
   (with-output-to-string (*standard-output*)
     (encode-alist data)))
 
+(defun satoshi->string (price)
+  "Display an integer amount of satoshis as a BTC value string."
+  (let* ((price (format nil "~8,'0d" price))
+         (index (- (length price) 8))
+         (prefix (subseq price 0 index))
+         (suffix (subseq price index)))
+    (if (>= index 1)
+      (format nil "~a.~a" prefix suffix)
+      (format nil "0.~a" price))))
+
