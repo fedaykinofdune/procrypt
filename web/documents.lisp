@@ -4,10 +4,10 @@
   "Generates the html which all pages have in common."
   `(<:html
      (<:head
-       (<:title (format nil "~a » ~a" (title *config*) ,title))
+       (<:title (format nil "~a » ~a" (title *web-config*) ,title))
        (<:meta :http-equiv "Content-Type" :content "text/html; charset=utf-8")
        (<:meta :name "author" :content
-         (format nil "~a <~a>" (title *config*) (email *config*)))
+         (format nil "~a <~a>" (title *web-config*) (email *web-config*)))
        (<:link :rel "stylesheet" :type "text/css" :href "/site.css")
        (<:link :rel "stylesheet" :type "text/css"
                :href "http://fonts.googleapis.com/css?family=Ubuntu")
@@ -15,10 +15,11 @@
                :href "http://fonts.googleapis.com/css?family=Exo:800italic"))
      (<:body
        (<:div :id "header"
-         (<:div :id "header-content" :class "left"
+         (<:div :id "header-left" :class "left"
            (<:div :id "title" :class "no-select"
              (<:a :href "/" (<:span "Pro") "Crypt")))
-           (navigation-menu :selected ,selected))  
+         (<:div :id "header-right"
+           (navigation-menu :selected ,selected)))  
        (<:div :id "content"
          (<:div :id "sidebar" :class "left" (sidebar))
          (<:div :id "main"
@@ -26,7 +27,7 @@
        (<:div :id "footer"
          (format nil "&copy;2014-~a ~a"
                  (nth-value 5 (get-decoded-time))
-                 (<:a :href (format nil "mailto:~a" (email *config*))
+                 (<:a :href (format nil "mailto:~a" (email *web-config*))
                       "ProCrypt"))))))
 
 (defmacro navigation-menu (&key (selected ""))
@@ -43,7 +44,7 @@
          ,(menu-item "/wallets" "Wallets")
          ,(menu-item "/help" "Help")
          ,(menu-item "/account" "Account"))
-       (<:ul :id "menu" :class "right"
+       (<:ul :id "menu" :class "hard-right"
          ,(menu-item "/login" "Login")
          ,(menu-item "/signup" "Sign Up")))))
 
@@ -51,8 +52,9 @@
   (loop for coin in (find-coins-by-base base-coin)
         for code = (code coin)
         for last-trade = (car (find-market-trades base-coin code :limit 1))
-        for price = (satoshi->string (if last-trade (price last-trade) 0))
-        collect (<:tr (<:td code) (<:td price))))
+        for price = (satoshi->bitcoin-price (if last-trade (price last-trade) 0))
+        for link = (format nil "location.href='/trade/~a'" code)
+        collect (<:tr :onclick link (<:td code) (<:td price))))
 
 (defun sidebar ()
   (<:div :id "sidebar-content"
@@ -62,13 +64,17 @@
         (<:td "Coin")
         (<:td "Price"))
       (sidebar-prices "BTC"))
-    
     (<:h1 "Litecoin Markets")
     (<:table
       (<:tr
         (<:td "Coin")
         (<:td "Price"))
       (sidebar-prices "LTC"))))
+
+(defun home ()
+  "An alias for the web server used to redirect traffic to the main web site
+   module."
+  (redirect "/overview"))
 
 (defun 404-page ()
   "The page displayed when a path on the web server cannot be found."

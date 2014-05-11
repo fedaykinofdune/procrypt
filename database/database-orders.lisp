@@ -24,7 +24,10 @@
           :col-type bigint)
    (quantity :accessor quantity
              :initarg :quantity
-             :col-type double-precision))
+             :col-type double-precision)
+   (total :accessor total
+          :initarg :total
+          :col-type bigint))
   (:keys id)
   (:metaclass dao-class))
 
@@ -64,18 +67,18 @@
       (when order-row
         (delete-dao order-row)))))
 
-(defun find-market-bids (base-coin quote-coin)
+(defun find-bid-orders (base-coin quote-coin)
   "Returns a list of objects representing all bid orders in the orders table
    matching the given trade pair, sorted by the bid price."
   (with-connection *db*
-    (select-dao 'orders
+    (select-dao 'trades
                 (:and
                   (:= 'base-coin base-coin)
                   (:= 'quote-coin quote-coin)
                   (:= 'action "bid"))
                 (:desc 'price))))
 
-(defun find-market-asks (base-coin quote-coin)
+(defun find-ask-orders (base-coin quote-coin)
   "Returns a list of objects representing all ask orders in the orders table
    matching the given trade pair, sorted by the ask price."
   (with-connection *db*

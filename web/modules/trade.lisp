@@ -22,14 +22,32 @@
 
 (defun buy-block ()
   (<:div :class "half"
-    (<:div :id "trade-block"
-      (<:div :class "header" "Buy Coin")
-      (<:div :class "content" "Test")
-      )))
+    (<:h2 "Buy Coin")
+      (<:div :class "trade-block"
+        (<:div :class "trade-list"
+          (<:table
+            (<:tr
+              (<:td "Price")
+              (<:td "Quantity")
+              (<:td "Total"))
+            (loop for i from 1 to 100
+                  collect (<:tr
+                            (<:td "Test")
+                            (<:td "Test")
+                            (<:td "Test"))))))))
 
 (defun sell-block ()
   (<:div :class "half"
-    (<:div :id "trade-block"
-      (<:div :class "header" "Sell Coin")
-      (<:div :class "content" "Test")
-      )))
+    (<:h2 "Sell Coin")
+      (<:div :class "trade-block"
+        (<:div :class "trade-list"
+          (<:table
+            (<:tr
+              (<:td "Price")
+              (<:td "Quantity")
+              (<:td "Total"))
+            (loop for i from 1 to 100
+                  collect (<:tr
+                            (<:td "Test")
+                            (<:td "Test")
+                            (<:td "Test"))))))))

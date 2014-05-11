@@ -2,19 +2,13 @@
   :name "procrypt"
   :author "axion <axedcode@gmail.com>"
   :description "Procrypt"
-  :depends-on (:postmodern
+  :depends-on (:axion.utils
+               :postmodern
                :hunchentoot
                :sexml
-               :css-lite
-               :cl-fad
-               :ironclad
-               :babel
-               :drakma
-               :yason
-               :trivial-timeout)
+               :css-lite)
   :serial t
   :components ((:file "packages")
-               (:file "utils")
                (:file "rpc-client")
                (:file "main")
                (:module "database"
@@ -28,7 +22,6 @@
                (:module "web"
                  :components
                    ((:file "config")
-                    (:file "server")
                     (:file "documents")
                     (:file "style")
                     (:module "modules"
