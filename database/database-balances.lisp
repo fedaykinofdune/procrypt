@@ -22,7 +22,7 @@
 (defun insert-balances (user-id)
   "Insert records for each coin into the balances table for the given
    user id."
-  (with-connection *db*
+  (with-connection *database*
     (dolist (coin-row (find-all-coins))
       (make-dao 'balances
                 :user-id user-id
@@ -31,7 +31,7 @@
 (defun find-user-balance (user-id coin-code)
   "Return an object representing the record from the balances table for
    the given user id and coin code."
-  (with-connection *db*
+  (with-connection *database*
     (first
       (select-dao
         'balances (:and
@@ -41,7 +41,7 @@
 (defun find-all-user-balances (user-id)
   "Return a list of objects representing records from the balances table
    of each coin for the given user id."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao
       'balances (:= 'user-id user-id)
       'coin)))
@@ -49,7 +49,7 @@
 (defun find-positive-user-balances (user-id)
   "Return a list of objects representing records from the balances table
    of each coin with a positive balance for the given user id."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao
       'balances (:and
                   (:= 'user-id user-id)

@@ -2,11 +2,9 @@
   :name "procrypt"
   :author "axion <axedcode@gmail.com>"
   :description "Procrypt"
-  :depends-on (:axion.utils
-               :postmodern
-               :hunchentoot
-               :sexml
-               :css-lite)
+  :depends-on (:axion.project
+               :axion.utils
+               :axion.web)
   :serial t
   :components ((:file "packages")
                (:file "rpc-client")

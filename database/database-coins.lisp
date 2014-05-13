@@ -46,7 +46,7 @@
 (defun insert-coin (code name address port username password
                          trade-btc trade-ltc trade-fee)
   "Insert a record into the coins table."
-  (with-connection *db*
+  (with-connection *database*
     (unless (find-coin-by-code code)
       (make-dao 'coins
                 :code code
@@ -61,14 +61,14 @@
 
 (defun remove-coin (coin-code)
   "Removes a coin from the coins table."
-  (with-connection *db*
+  (with-connection *database*
     (let ((coin-row (get-dao 'coins coin-code)))
       (when coin-row
         (delete-dao coin-row)))))
 
 (defun insert-coin-balances (coin-code)
   "Insert a record for the given coin into the balances table for all users."
-  (with-connection *db*
+  (with-connection *database*
     (dolist (user-row (find-all-users))
       (make-dao 'balances
                 :user-id (id user-row)
@@ -77,13 +77,13 @@
 (defun find-coin-by-code (coin-code)
   "Returns an object representing a record in the coins table with the given
    coin code."
-  (with-connection *db*
+  (with-connection *database*
     (get-dao 'coins coin-code)))
 
 (defun find-all-coins ()
   "Returns a list of objects representing all records in the coins table,
    sorted by coin code."
-  (with-connection *db*
+  (with-connection *database*
     (query-dao 'coins
                (:order-by
                  (:select '* :from 'coins)
@@ -93,7 +93,7 @@
   "Returns a list of objects representing records in the coins table
    that are marked as able to be traded for the given base coin code,
    sorted by coin code."
-  (with-connection *db*
+  (with-connection *database*
     (cond
       ((string= base-coin-code "BTC")
        (query-dao 'coins

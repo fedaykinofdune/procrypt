@@ -5,6 +5,7 @@
                  :title "ProCrypt"
                  :subtitle "Some tagline"
                  :email "procrypt@example.com"
+                 :version "0.1"
                  :port 12345
                  :root "static/"
                  :modules '(module-overview "/overview"

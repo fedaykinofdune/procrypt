@@ -11,9 +11,4 @@
   (let ((title "Account"))
     (generic-page
       (:title title
-       :selected "Account")
-      (content-main
-        (:title title)
-        "User Details"
-        )
-      )))
+       :selected "Account"))))

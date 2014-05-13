@@ -31,7 +31,7 @@
 
 (defun insert-user (username password email)
   "Insert a new user record into the users table returning its user id."
-  (with-connection *db*
+  (with-connection *database*
     (unless (find-user-by-email email)
       (let ((password-hash (hash-password password)))
         (make-dao 'users
@@ -43,19 +43,19 @@
 
 (defun find-all-users ()
   "Returns a list of all user row objects."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao 'users)))
 
 (defun find-user-by-email (user-email)
   "Returns an object representing the record in the users table with the
    given email."
-  (with-connection *db*
+  (with-connection *database*
     (first (select-dao 'users (:= 'email user-email)))))
 
 (defun update-user-email (user-email new-email)
   "Updates the user record for the given email address with a new email
    address."
-  (with-connection *db*
+  (with-connection *database*
     (let* ((user-row (find-user-by-email user-email)))
       (when user-row
         (setf (email user-row) new-email)
@@ -63,7 +63,7 @@
 
 (defun update-user-password (user-email password)
   "Updates the user record for the given email address with a new password."
-  (with-connection *db*
+  (with-connection *database*
     (let* ((user-row (find-user-by-email user-email))
            (password-hash (hash-password password))
            (hash (getf password-hash :hash))

@@ -40,7 +40,7 @@
 (defun insert-order (&key user-id action base-coin quote-coin price
                           quantity)
   "Insert a record into the orders table."
-  (with-connection *db*
+  (with-connection *database*
     (make-dao 'orders
               :user-id user-id
               :timestamp (get-universal-time)
@@ -54,7 +54,7 @@
   "Updates an order as having been completed by copying the record to the
    trades table and setting a new timestamp, then removing it from the orders
    table."
-  (with-connection *db*
+  (with-connection *database*
     (let ((order-row (get-dao 'orders order-id)))
       (when order-row
         (insert-trade order-id)
@@ -62,7 +62,7 @@
 
 (defun remove-order (order-id)
   "Removes the record of the given order id from the orders table."
-  (with-connection *db*
+  (with-connection *database*
     (let ((order-row (get-dao 'orders order-id)))
       (when order-row
         (delete-dao order-row)))))
@@ -70,7 +70,7 @@
 (defun find-bid-orders (base-coin quote-coin)
   "Returns a list of objects representing all bid orders in the orders table
    matching the given trade pair, sorted by the bid price."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao 'trades
                 (:and
                   (:= 'base-coin base-coin)
@@ -81,7 +81,7 @@
 (defun find-ask-orders (base-coin quote-coin)
   "Returns a list of objects representing all ask orders in the orders table
    matching the given trade pair, sorted by the ask price."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao 'orders
                 (:and
                   (:= 'base-coin base-coin)
@@ -92,5 +92,5 @@
 (defun find-user-orders (user-id)
   "Returns a list of objects representing all orders in the orders
    table for the given user id, sorted by the time they were placed."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao 'orders (:= 'user-id user-id) (:desc 'timestamp))))

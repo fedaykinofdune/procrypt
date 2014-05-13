@@ -1,6 +1,6 @@
 (in-package :procrypt)
 
-(defparameter *db* '("procrypt" "axion" nil "localhost"))
+(defparameter *database* '("procrypt" "axion" nil "localhost"))
 
 (defparameter *table-names*
   '(users

@@ -37,7 +37,7 @@
 (defun insert-trade (order-id)
   "Inserts an order record into the trades table, and sets its timestamp
    to the current time."
-  (with-connection *db*
+  (with-connection *database*
     (unless (get-dao 'trades order-id)
       (query (:insert-into 'trades
               (:select '* :from 'orders
@@ -49,7 +49,7 @@
 (defun find-market-trades (base-coin-code quote-coin-code &key (limit 100))
   "Return a list of objects representing the last 100 trade records for the
    given trade pair."
-  (with-connection *db*
+  (with-connection *database*
     (query-dao 'trades
                (:limit
                  (:order-by
@@ -63,5 +63,5 @@
 (defun find-user-trades (user-id)
   "Return a list of objects representing trade records for the given user id,
    sorted by the time they were traded."
-  (with-connection *db*
+  (with-connection *database*
     (select-dao 'trades (:= 'user-id user-id) (:desc 'timestamp))))
